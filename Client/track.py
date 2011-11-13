@@ -47,11 +47,11 @@ def map_range(out_low, out_high, range_low, range_high, val):
 def command_pos(lat, lon):
   # Laser
   lat_servo = map_range(145, 29, -60, 60, lat)
-  lat_servo = int(lat_servo)
+  lat_servo = int(round(lat_servo))
   
   # Globe
   lon_servo = map_range(180, 0, -180, 180, lon)
-  lon_servo = int(lon_servo)
+  lon_servo = int(round(lon_servo))
   
   print lat, lon
   print lat_servo, lon_servo
