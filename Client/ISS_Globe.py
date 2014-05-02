@@ -32,17 +32,21 @@ class Hardware:
     self.ser.close()
 
 class satellite:
-  
-  def __init__(self):
 
-    self.iss = ephem.readtle("ISS",             
-        "1 25544U 98067A   11317.43923700  .00025400  00000-0  30934-3 0  4247"
-      , "2 25544  51.6402 129.5626 0021849  53.2994  33.8338 15.60068263744210")
+    def __init__(self):
 
-    self.locate()
+        # Read in ISS Data
+        tle = []
+        with open('data/iss.tle', 'r') as f_in:
+            for i, line in enumerate(f_in):
+                if i > 2: break;
+                tle.append(line.strip())
+
+        self.iss = ephem.readtle(*tle)
+        self.locate()
     
-  def locate(self):
-    self.iss.compute()
-    self.lat = math.degrees(self.iss.sublat)
-    self.lon = math.degrees(self.iss.sublong)
-    return self.lat, self.lon
+    def locate(self):
+        self.iss.compute()
+        self.lat = math.degrees(self.iss.sublat)
+        self.lon = math.degrees(self.iss.sublong)
+        return self.lat, self.lon
